@@ -25,8 +25,8 @@ static int	memory_to_allocate(int abs_n, int negative)
 {
 	int	count;
 
-	count = 0;
-	while (abs_n > 0)
+	count = 1;
+	while (abs_n >= 10)
 	{
 		count++;
 		abs_n /= 10;
@@ -44,7 +44,7 @@ char	*ft_itoa(int n)
 
 	if (n == INT_MIN)
 		return (ft_strdup("-2147483648"));
-	size = memory_to_allocate(ft_abs(n), (n <= 0));
+	size = memory_to_allocate(ft_abs(n), (n < 0));
 	str = ft_calloc(size + 1, sizeof(char));
 	if (!str)
 		return (NULL);
