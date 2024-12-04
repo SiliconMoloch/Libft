@@ -31,8 +31,7 @@ static int	memory_to_allocate(int abs_n, int negative)
 		count++;
 		abs_n /= 10;
 	}
-	if (negative)
-		count += 1;
+	count += negative;
 	return (count);
 }
 
@@ -40,23 +39,23 @@ char	*ft_itoa(int n)
 
 {
 	int		size;
-	char	*str;
+	char	*s;
 
 	if (n == INT_MIN)
 		return (ft_strdup("-2147483648"));
 	size = memory_to_allocate(ft_abs(n), (n < 0));
-	str = ft_calloc(size + 1, sizeof(char));
-	if (!str)
+	s = ft_calloc(size + 1, sizeof(char));
+	if (!s)
 		return (NULL);
 	if (n < 0)
-		str[0] = '-';
+		s[0] = '-';
 	n = ft_abs(n);
-	str[size] = '\0';
-	str[--size] = (n % 10) + '0';
+	s[size] = '\0';
+	s[--size] = (n % 10) + '0';
 	while (n >= 10)
 	{
 		n /= 10;
-		str[--size] = (n % 10) + '0';
+		s[--size] = (n % 10) + '0';
 	}
-	return (str);
+	return (s);
 }
