@@ -3,27 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabokhar <yabokhar@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: yabokhar <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 20:30:02 by yabokhar          #+#    #+#             */
-/*   Updated: 2024/11/12 13:52:10 by yabokhar         ###   ########.fr       */
+/*   Created: 2025/01/29 16:08:04 by yabokhar          #+#    #+#             */
+/*   Updated: 2025/01/29 16:12:55 by yabokhar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	release_memory(char **array)
+char			**ft_split(const char *s, char c);
+static size_t	count_words(const char *str, char c);
+static char		*loading_word(char const *s, char c);
+static char		**fill_array(char const *s, char c, char **array);
+static void		release_memory(char **array);
+
+char	**ft_split(const char *s, char c)
 
 {
-	size_t	i;
+	size_t	size;
+	char	**array;
 
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
+	if (!s)
+		return (NULL);
+	size = count_words(s, c);
+	array = ft_calloc((size + 1), sizeof(char *));
+	if (!array)
+		return (NULL);
+	array = fill_array(s, c, array);
+	return (array);
 }
 
 static size_t	count_words(const char *str, char c)
@@ -98,18 +106,16 @@ static char	**fill_array(char const *s, char c, char **array)
 	return (array);
 }
 
-char	**ft_split(char const *s, char c)
+static void	release_memory(char **array)
 
 {
-	size_t	size;
-	char	**array;
+	size_t	i;
 
-	if (!s)
-		return (NULL);
-	size = count_words(s, c);
-	array = ft_calloc((size + 1), sizeof(char *));
-	if (!array)
-		return (NULL);
-	array = fill_array(s, c, array);
-	return (array);
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
 }
